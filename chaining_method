@@ -1,0 +1,39 @@
+class Query:
+    def __init__(self):
+        self.query = ""
+    
+    def select(self, *fields):
+        self.query += "SELECT " + ", ".join(fields) + " "
+        return self
+    
+    def from_(self, table):
+        self.query += "FROM " + table + " "
+        return self
+    
+    def where(self, condition):
+        self.query += "WHERE " + condition + " "
+        return self
+    
+    def order_by(self, field, direction="ASC"):
+        self.query += "ORDER BY " + field + " " + direction + " "
+        return self
+    
+    def limit(self, count):
+        self.query += "LIMIT " + str(count) + " "
+        return self
+    
+    def build(self):
+        return self.query.strip() + ";"
+
+# Example usage
+q = Query()
+query_string = (
+    q.select("name", "age")
+     .from_("users")
+     .where("age > 18")
+     .order_by("age", "DESC")
+     .limit(10)
+     .build()
+)
+
+print(query_string)
